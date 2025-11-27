@@ -1,18 +1,17 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class PlinkoGamePresenter : ISpawnButtonListener
 {
-    private readonly PlinkoGameModel _model;
+    private readonly PlinkoGameModel model;
 
-    private readonly List<SpawnerView> _spawners;
-    private readonly List<SpawnButtonView> _spawnButtons;
-    private readonly List<SpecialPinView> _specialPins;
+    private readonly List<SpawnerView> spawners;
+    private readonly List<SpawnButtonView> spawnButtons;
+    private readonly List<SpecialPinView> specialPins;
 
-    private readonly IBallScoreView _ballScoreView;
-    private readonly ITotalScoreView _totalScoreView;
-    private readonly IChestBarView _chestBarView;
-    private readonly ICurrencyView _currencyView;
+    private readonly IBallScoreView ballScoreView;
+    private readonly ITotalScoreView totalScoreView;
+    private readonly IChestBarView chestBarView;
+    private readonly ICurrencyView currencyView;
 
     private readonly List<BallView> _activeBalls = new List<BallView>();
     private readonly bool[] _chestRewardGiven;
@@ -28,31 +27,35 @@ public class PlinkoGamePresenter : ISpawnButtonListener
         IChestBarView chestBarView,
         ICurrencyView currencyView)
     {
-        _model = model;
-        _spawners = spawners;
-        _spawnButtons = spawnButtons;
-        _specialPins = specialPins;
-        _ballScoreView = ballScoreView;
-        _totalScoreView = totalScoreView;
-        _chestBarView = chestBarView;
-        _currencyView = currencyView;
+        this.model = model;
+        this.spawners = spawners;
+        this.spawnButtons = spawnButtons;
+        this.specialPins = specialPins;
+        this.ballScoreView = ballScoreView;
+        this.totalScoreView = totalScoreView;
+        this.chestBarView = chestBarView;
+        this.currencyView = currencyView;
 
-        _rewardSteps = _chestBarView.GetRewardSteps() ?? new RewardStep[0];
+        _rewardSteps = this.chestBarView.GetRewardSteps() ?? new RewardStep[0];
         _chestRewardGiven = new bool[_rewardSteps.Length];
     }
 
     public void Initialize()
     {
-        for (int i = 0; i < _spawnButtons.Count; i++)
+        for (int i = 0; i < spawnButtons.Count; i++)
         {
-            _spawnButtons[i].Initialize(i, this);
+            spawnButtons[i].Initialize(i, this);
         }
 
-        _ballScoreView.SetScore(0);
-        _totalScoreView.SetScore(_model.TotalScore);
-        _currencyView.SetCurrency(_model.Currency);
-        _chestBarView.SetFill(0f);
-        _chestBarView.ResetRewards();
+        ballScoreView.SetScore(0);
+        totalScoreView.SetScore(model.TotalScore);
+        currencyView.SetCurrency(model.Currency);
+        chestBarView.SetFill(0f);
+
+        for (int i = 0; i < _chestRewardGiven.Length; i++)
+        {
+            _chestRewardGiven[i] = false;
+        }
     }
 
     public void Dispose()
@@ -66,25 +69,25 @@ public class PlinkoGamePresenter : ISpawnButtonListener
 
     public void OnSpawnButtonClicked(int index)
     {
-        foreach (var b in _spawnButtons)
+        foreach (var b in spawnButtons)
         {
             b.DisallowInteraction(index);
         }
 
-        if (index < 0 || index >= _spawners.Count)
+        if (index < 0 || index >= spawners.Count)
         {
             return;
         }
 
-        SpawnerView spawner = _spawners[index];
+        SpawnerView spawner = spawners[index];
         BallView ball = spawner.SpawnBall();
         if (ball == null)
             return;
 
         BindBall(ball);
 
-        _model.ResetForNewBall();
-        _ballScoreView.SetScore(0);
+        model.ResetForNewBall();
+        ballScoreView.SetScore(0);
     }
 
     private void BindBall(BallView ball)
@@ -102,61 +105,59 @@ public class PlinkoGamePresenter : ISpawnButtonListener
 
     private void HandleSpecialPinHit(SpecialPinView pin)
     {
+        model.RegisterSpecialPinHit();
 
-        _model.RegisterSpecialPinHit();
-
-        foreach (var sp in _specialPins)
+        foreach (var sp in specialPins)
         {
-            sp.SetFillAmount(_model.CurrentSpecialPinHitCount, _model.MaxSpecialPinHitCount);
+            sp.SetFillAmount(model.CurrentSpecialPinHitCount, model.MaxSpecialPinHitCount);
         }
 
-        _ballScoreView.SetScore(_model.CurrentBallScore);
-
+        ballScoreView.SetScore(model.CurrentBallScore);
     }
 
     private void HandleBasketEntered(BasketView basket)
     {
         int multiplier = basket.GetMultiplier();
 
-        _model.ResolveBallInBasket(multiplier);
+        model.ResolveBallInBasket(multiplier);
 
+        ballScoreView.SetScore(model.CurrentBallScore);
+        ballScoreView.ResetWithAnimation();
 
-        _ballScoreView.SetScore(_model.CurrentBallScore);
-        _ballScoreView.ResetWithAnimation();
-
-        _totalScoreView.AddScoreWithAnimation(_model.CurrentBallScore);
-        _chestBarView.SetFill(_model.ChestProgress / _model.ChestMaxProgress);
+        totalScoreView.AddScoreWithAnimation(model.CurrentBallScore);
+        chestBarView.SetFill(model.ChestProgress / model.ChestMaxProgress);
 
         CheckChestRewards();
 
-        foreach (var b in _spawnButtons)
+        foreach (var b in spawnButtons)
         {
             b.AllowInteraction();
         }
-        
-        foreach (var sp in _specialPins)
-        {
-            sp.SetFillAmount(0, _model.MaxSpecialPinHitCount);
-        }
 
+        foreach (var sp in specialPins)
+        {
+            sp.SetFillAmount(0, model.MaxSpecialPinHitCount);
+        }
     }
 
     private void CheckChestRewards()
     {
-
-        float progress = _model.ChestProgress;
+        float progress = model.ChestProgress;
 
         for (int i = 0; i < _rewardSteps.Length; i++)
         {
+            if (_chestRewardGiven[i])
+                continue;
+
             if (progress >= _rewardSteps[i].threshold)
             {
                 _chestRewardGiven[i] = true;
 
                 float rewardAmount = _rewardSteps[i].rewardAmount;
-                _model.AddCurrency(rewardAmount);
+                model.AddCurrency(rewardAmount);
 
-                _currencyView.SetCurrencyWithAnimation(_model.Currency);
-                _chestBarView.TriggerReward(i, _rewardSteps[i]);
+                currencyView.SetCurrencyWithAnimation(model.Currency);
+                chestBarView.TriggerReward(i, _rewardSteps[i]);
             }
         }
     }

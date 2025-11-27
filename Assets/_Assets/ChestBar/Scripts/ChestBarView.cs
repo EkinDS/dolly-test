@@ -9,8 +9,6 @@ public class ChestBarView : MonoBehaviour, IChestBarView
     [SerializeField] private RewardStep[] rewardSteps;
 
     public float MaximumProgress => maximumProgress;
-    private Tween fillTween;
-    private bool[] rewardGiven;
 
     private void Awake()
     {
@@ -19,12 +17,6 @@ public class ChestBarView : MonoBehaviour, IChestBarView
 
     public void Initialize()
     {
-        if (rewardSteps == null)
-        {
-            rewardSteps = new RewardStep[0];
-        }
-
-        rewardGiven = new bool[rewardSteps.Length];
         SetFill(0f);
     }
 
@@ -35,29 +27,28 @@ public class ChestBarView : MonoBehaviour, IChestBarView
 
     public void SetFill(float normalized)
     {
+        if (fillerImage == null)
+            return;
+
         normalized = Mathf.Clamp01(normalized);
 
-        fillTween = fillerImage.DOFillAmount(normalized, 1f).SetDelay(0.5f);
+        fillerImage
+            .DOFillAmount(normalized, 1f)
+            .SetDelay(0.5f);
     }
 
     public void TriggerReward(int index, RewardStep step)
     {
-        step.rewardObjectTransform.DOScale(1.3F, 0.2F).OnComplete((() =>
-        {
-            step.rewardObjectTransform.DOScale(1F, 0.2F).SetDelay(0.2F);
-        }));
-    }
+        if (step.rewardObjectTransform == null)
+            return;
 
-    public void ResetRewards()
-    {
-        if (rewardGiven == null || rewardGiven.Length != rewardSteps.Length)
-        {
-            rewardGiven = new bool[rewardSteps.Length];
-        }
-
-        for (int i = 0; i < rewardGiven.Length; i++)
-        {
-            rewardGiven[i] = false;
-        }
+        step.rewardObjectTransform
+            .DOScale(1.3f, 0.2f)
+            .OnComplete(() =>
+            {
+                step.rewardObjectTransform
+                    .DOScale(1f, 0.2f)
+                    .SetDelay(0.2f);
+            });
     }
 }
