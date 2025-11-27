@@ -4,52 +4,57 @@ using UnityEngine.UI;
 
 public class SpawnButtonView : MonoBehaviour
 {
+    [SerializeField] private int index;
+    [SerializeField] private Button button;
     [SerializeField] private SpawnerView spawnerView;
 
-    private PlinkoManager plinkoManager;
-    private Button button;
+    private float _initialPositionY;
+    private ISpawnButtonListener _listener;
 
-    private float initialPositionY;
-    private int index;
+    public SpawnerView SpawnerView => spawnerView;
 
-    private void Awake()
+    public void Initialize(int newIndex, ISpawnButtonListener listener)
     {
+        index = newIndex;
+        _listener = listener;
+
+
         button = GetComponent<Button>();
-        initialPositionY = transform.localPosition.y;
+
+
+        _initialPositionY = button.transform.localPosition.y;
+        button.onClick.AddListener(HandleClick);
     }
 
-    public void Initialize(PlinkoManager newPlinkoManager, int newIndex)
+    private void OnDestroy()
     {
-        plinkoManager = newPlinkoManager;
-        index = newIndex;
+        button.onClick.RemoveListener(HandleClick);
+    }
+
+    private void HandleClick()
+    {
+        _listener?.OnSpawnButtonClicked(index);
     }
 
     public void AllowInteraction()
     {
         button.interactable = true;
-
-        button.transform.DOLocalMoveY(initialPositionY, 0.2F);
+        button.transform.DOLocalMoveY(_initialPositionY, 0.1f);
     }
 
     public void DisallowInteraction(int clickedIndex)
     {
         button.interactable = false;
 
+        float targetY = _initialPositionY - 20f;
+
         if (clickedIndex == index)
         {
-            button.transform.DOLocalMoveY(initialPositionY - 20F, 0.1F);
+            button.transform.DOLocalMoveY(targetY, 0.1f);
         }
         else
         {
-            button.transform.DOLocalMoveY(initialPositionY - 20F, 0.1F).SetDelay(0.1F);
-
+            button.transform.DOLocalMoveY(targetY, 0.1f).SetDelay(0.1f);
         }
-    }
-
-    public void OnSpawnButtonClicked()
-    {
-        spawnerView.SpawnBall();
-
-        plinkoManager.OnSpawnButtonClicked(index);
     }
 }

@@ -1,60 +1,48 @@
+using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class BallView : MonoBehaviour
 {
-    private Rigidbody2D _rigidbody;
-    private PlinkoManager plinkoManager;
-    private bool collidedWithBasket;
-    
-    
-    private void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody2D>();
-    }
+    [SerializeField] private Rigidbody2D rigidbody;
 
-    public void Initialize(PlinkoManager newPlinkoManager)
+    private bool collidedWithBasket;
+
+    public event Action<SpecialPinView> SpecialPinHit;
+    public event Action<BasketView> BasketEntered;
+
+    public void Initialize()
     {
-        plinkoManager = newPlinkoManager;
+            rigidbody = GetComponent<Rigidbody2D>();
+
+        collidedWithBasket = false;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        SpecialPinView specialPinView = other.gameObject.GetComponent<SpecialPinView>();
-        
-        if (specialPinView)
+        if (other.gameObject.TryGetComponent(out SpecialPinView specialPin))
         {
-            if (!specialPinView.IsHighlighted)
+            if (!specialPin.IsHighlighted)
             {
-                float power = Random.Range(3F, 5F);
-                Vector3 currentPosition = transform.position;
-                Vector3 otherPosition = other.transform.position;
-                Vector3 direction = currentPosition - otherPosition;
-                Vector3 normalizedDirection = direction.normalized;
-                Vector3 force = power * normalizedDirection;
-
-                _rigidbody.AddForce(force, ForceMode2D.Impulse);
-
-                specialPinView.GetHit();
+                float power = UnityEngine.Random.Range(3f, 5f);
+                Vector2 contact = other.GetContact(0).point;
+                Vector2 direction = ((Vector2)transform.position - contact).normalized;
+                rigidbody.AddForce(direction * power, ForceMode2D.Impulse);
+                specialPin.GetHit();
+                SpecialPinHit?.Invoke(specialPin);
             }
 
             return;
         }
 
-        BasketView basketView = other.gameObject.GetComponent<BasketView>();
-        
-        if (basketView)
+        if (other.gameObject.TryGetComponent(out BasketView basket))
         {
             if (!collidedWithBasket)
             {
                 collidedWithBasket = true;
-                plinkoManager.OnBallEnteredBasket(basketView.GetMultiplier());
-            
+                BasketEntered?.Invoke(basket);
                 Destroy(gameObject);
-
-                return;
             }
-            
         }
     }
 }

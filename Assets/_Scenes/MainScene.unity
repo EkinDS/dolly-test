@@ -351,7 +351,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bea9721bbeb4ab40973f77534909988, type: 3}
+  m_Script: {fileID: 11500000, guid: 75eac579349161e4191c5981289eabe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &158136922
@@ -1012,9 +1012,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 325631596}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53b46a435f132374a8ca2208c43e463b, type: 3}
+  m_Script: {fileID: 11500000, guid: 0487d34b437aee2438b009ca987960de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 2
+  button: {fileID: 325631600}
   spawnerView: {fileID: 1107520476}
 --- !u!1 &358826629
 GameObject:
@@ -2720,7 +2722,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 715202448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 738b32bf92abf86438107fe852f1f1c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 220b2f73c0a03f7489316f9aa9483ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 682427878}
@@ -2768,11 +2770,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 733427432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e00d299ba5997e499c60b2328f9a201, type: 3}
+  m_Script: {fileID: 11500000, guid: fb73394873ef85b4a95b28b590ce0023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballPrefab: {fileID: 4365195856107286903, guid: 5e1d35c046342094a82a2f85034e5721, type: 3}
   spawnIndicatorTransform: {fileID: 1924386528}
-  _ballViewPrefab: {fileID: 1185869721257024343, guid: 5e1d35c046342094a82a2f85034e5721, type: 3}
 --- !u!1001 &823939103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3967,9 +3969,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1106117570}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53b46a435f132374a8ca2208c43e463b, type: 3}
+  m_Script: {fileID: 11500000, guid: 0487d34b437aee2438b009ca987960de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
+  button: {fileID: 1106117574}
   spawnerView: {fileID: 733427434}
 --- !u!1 &1107520474
 GameObject:
@@ -4015,11 +4019,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1107520474}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e00d299ba5997e499c60b2328f9a201, type: 3}
+  m_Script: {fileID: 11500000, guid: fb73394873ef85b4a95b28b590ce0023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballPrefab: {fileID: 4365195856107286903, guid: 5e1d35c046342094a82a2f85034e5721, type: 3}
   spawnIndicatorTransform: {fileID: 1206583115}
-  _ballViewPrefab: {fileID: 1185869721257024343, guid: 5e1d35c046342094a82a2f85034e5721, type: 3}
 --- !u!1 &1138878124
 GameObject:
   m_ObjectHideFlags: 0
@@ -4705,7 +4709,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1275492226}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f106c04dce9c1cf4a992725bb8257d17, type: 3}
+  m_Script: {fileID: 11500000, guid: df69ce846e981644dbfa78ba237131d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currencyText: {fileID: 158136924}
@@ -5330,11 +5334,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpecialPinHitCount: 10
   scorePerHit: 5
+  chestMaxProgress: 1000
   spawnerViews:
   - {fileID: 733427434}
   - {fileID: 1647541630}
   - {fileID: 1107520476}
-  spawnerButtonViews:
+  spawnButtonViews:
   - {fileID: 1106117575}
   - {fileID: 1601652815}
   - {fileID: 325631601}
@@ -5775,9 +5780,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1601652810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53b46a435f132374a8ca2208c43e463b, type: 3}
+  m_Script: {fileID: 11500000, guid: 0487d34b437aee2438b009ca987960de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 1
+  button: {fileID: 1601652814}
   spawnerView: {fileID: 1647541630}
 --- !u!1 &1644512043
 GameObject:
@@ -5898,11 +5905,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1647541628}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e00d299ba5997e499c60b2328f9a201, type: 3}
+  m_Script: {fileID: 11500000, guid: fb73394873ef85b4a95b28b590ce0023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballPrefab: {fileID: 4365195856107286903, guid: 5e1d35c046342094a82a2f85034e5721, type: 3}
   spawnIndicatorTransform: {fileID: 1026911869}
-  _ballViewPrefab: {fileID: 1185869721257024343, guid: 5e1d35c046342094a82a2f85034e5721, type: 3}
 --- !u!1 &1659152528
 GameObject:
   m_ObjectHideFlags: 0
@@ -6219,7 +6226,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bea9721bbeb4ab40973f77534909988, type: 3}
+  m_Script: {fileID: 11500000, guid: 75eac579349161e4191c5981289eabe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1805456191
@@ -6273,17 +6280,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1805456191}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 336d36e65bdcf0f4bb0a751d08328d82, type: 3}
+  m_Script: {fileID: 11500000, guid: cbfcdc4a74690664b879b7af7ffb4d46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maximumProgress: 1000
   fillerImage: {fileID: 310164670}
   rewardSteps:
-  - threshold: 333
+  - rewardObjectTransform: {fileID: 1659152529}
+    threshold: 333
     rewardAmount: 0.5
-  - threshold: 666
+  - rewardObjectTransform: {fileID: 279264432}
+    threshold: 666
     rewardAmount: 0.5
-  - threshold: 999
+  - rewardObjectTransform: {fileID: 1182268922}
+    threshold: 999
     rewardAmount: 5
 --- !u!4 &1824989741 stripped
 Transform:
@@ -6360,7 +6370,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bea9721bbeb4ab40973f77534909988, type: 3}
+  m_Script: {fileID: 11500000, guid: 75eac579349161e4191c5981289eabe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1882418555
@@ -6411,7 +6421,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1882418555}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad2ba839b4ae39040bf14bba90de7bb9, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d0c372f09b7f7848a2fe65ba8cac623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 958960653}
@@ -6547,7 +6557,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bea9721bbeb4ab40973f77534909988, type: 3}
+  m_Script: {fileID: 11500000, guid: 75eac579349161e4191c5981289eabe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1997550038
@@ -6970,7 +6980,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bea9721bbeb4ab40973f77534909988, type: 3}
+  m_Script: {fileID: 11500000, guid: 75eac579349161e4191c5981289eabe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2196113570671363846

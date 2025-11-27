@@ -346,13 +346,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3008115267686235796}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bea9721bbeb4ab40973f77534909988, type: 3}
+  m_Script: {fileID: 11500000, guid: 75eac579349161e4191c5981289eabe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fillImage: {fileID: 6495178162572315804}
+  fullImage: {fileID: 8098931200061728687}
   multiplierText: {fileID: 6994934652734475176}
   plusText: {fileID: 8920998267376738376}
-  fillerImage: {fileID: 6495178162572315804}
-  fullImage: {fileID: 8098931200061728687}
 --- !u!1 &3292220473002684038
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,7 +629,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
