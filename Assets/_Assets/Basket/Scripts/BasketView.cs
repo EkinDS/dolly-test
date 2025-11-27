@@ -2,15 +2,20 @@ using UnityEngine;
 
 public class BasketView : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private int multiplier;
+    [SerializeField] private GameObject twoMultiplier;
+    [SerializeField] private GameObject threeMultiplier;
+    [SerializeField] private GameObject fiveMultiplier;
+
+    private void Awake()
     {
-        
+        twoMultiplier.gameObject.SetActive(multiplier == 2);
+        threeMultiplier.gameObject.SetActive(multiplier == 3);
+        fiveMultiplier.gameObject.SetActive(multiplier == 5);
     }
 
-    // Update is called once per frame
-    void Update()
+    public int GetMultiplier()
     {
-        
+        return multiplier;
     }
 }

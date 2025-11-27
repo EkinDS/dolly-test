@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1628246989761728530}
   - component: {fileID: 9094474745219356428}
   - component: {fileID: 3310549869346749500}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BorderPin
   m_TagString: Untagged
   m_Icon: {fileID: 0}

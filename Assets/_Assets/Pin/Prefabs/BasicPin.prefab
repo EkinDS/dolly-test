@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2784354016537497820}
   - component: {fileID: 8924472848611575762}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BasicPin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3827890282444379784}
   - component: {fileID: 4331535031433361230}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ellipse 31_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

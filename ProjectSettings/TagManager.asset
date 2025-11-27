@@ -11,12 +11,12 @@ TagManager:
   - 
   - Water
   - UI
-  - BallWithExpandedCollision
-  - BallWithLimitedCollision
+  - Ball
+  - 
   - Basket
   - Pin
   - Border
-  - 
+  - LowerLayerChanger
   - 
   - 
   - 
