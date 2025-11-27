@@ -411,7 +411,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $40.85
+  m_text: $0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -754,7 +754,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 234.40004}
-  m_SizeDelta: {x: 245, y: 35}
+  m_SizeDelta: {x: 210, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &310164670
 MonoBehaviour:
@@ -777,11 +777,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 6279997683059225759, guid: 02620167d255b8a41b6c91c7f0770ed2, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillMethod: 0
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1026,7 +1026,7 @@ GameObject:
   m_Component:
   - component: {fileID: 358826630}
   m_Layer: 5
-  m_Name: LowerButtons
+  m_Name: SpawnButtonContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3143,7 +3143,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 14.400007, y: -387.36255}
-  m_SizeDelta: {x: 27, y: 27}
+  m_SizeDelta: {x: 47.4, y: 27}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &958960653
 MonoBehaviour:
@@ -4629,6 +4629,7 @@ GameObject:
   - component: {fileID: 1275492227}
   - component: {fileID: 1275492229}
   - component: {fileID: 1275492228}
+  - component: {fileID: 1275492230}
   m_Layer: 5
   m_Name: InfoButton (1)
   m_TagString: Untagged
@@ -4695,6 +4696,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1275492226}
   m_CullTransparentMesh: 1
+--- !u!114 &1275492230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275492226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f106c04dce9c1cf4a992725bb8257d17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currencyText: {fileID: 158136924}
 --- !u!1 &1278366239
 GameObject:
   m_ObjectHideFlags: 0
@@ -5315,6 +5329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpecialPinHitCount: 10
+  scorePerHit: 5
   spawnerViews:
   - {fileID: 733427434}
   - {fileID: 1647541630}
@@ -5331,6 +5346,8 @@ MonoBehaviour:
   - {fileID: 115958764}
   ballScoreView: {fileID: 1882418557}
   totalScoreView: {fileID: 715202450}
+  chestBarView: {fileID: 1805456193}
+  currencyView: {fileID: 1275492230}
 --- !u!4 &1442134243
 Transform:
   m_ObjectHideFlags: 0
@@ -6214,6 +6231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1805456192}
+  - component: {fileID: 1805456193}
   m_Layer: 5
   m_Name: ChestBar
   m_TagString: Untagged
@@ -6246,6 +6264,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1805456193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805456191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 336d36e65bdcf0f4bb0a751d08328d82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maximumProgress: 1000
+  fillerImage: {fileID: 310164670}
+  rewardSteps:
+  - threshold: 333
+    rewardAmount: 0.5
+  - threshold: 666
+    rewardAmount: 0.5
+  - threshold: 999
+    rewardAmount: 5
 --- !u!4 &1824989741 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1628246989761728530, guid: a36cf603c959a1147a39626837d0ae7e, type: 3}
@@ -6335,7 +6374,7 @@ GameObject:
   - component: {fileID: 1882418556}
   - component: {fileID: 1882418557}
   m_Layer: 5
-  m_Name: LowerPart
+  m_Name: BallScoreView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

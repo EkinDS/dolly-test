@@ -1,16 +1,29 @@
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class CurrencyView : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField]  private TextMeshProUGUI currencyText;
+    
+    private float currency;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        currencyText.text = "$0";
+    }
+    
+    public void AddCurrencyWithAnimation(float currencyToAdd)
+    {
+        float startValue = currency;
+        float targetValue = currency + currencyToAdd;
+
+        currency += currencyToAdd;
+
+        DOTween.To(() => startValue, x =>
+        {
+            startValue = x;
+            currencyText.text = "$" + x.ToString("0.00");
+        }, targetValue, 0.5f).SetDelay(0.5F);
     }
 }

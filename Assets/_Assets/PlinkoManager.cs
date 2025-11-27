@@ -4,14 +4,18 @@ using UnityEngine;
 public class PlinkoManager : MonoBehaviour
 {
     [SerializeField] private int maxSpecialPinHitCount;
+    [SerializeField] private int scorePerHit;
     [SerializeField] private List<SpawnerView> spawnerViews;
     [SerializeField] private List<SpawnButtonView> spawnerButtonViews;
     [SerializeField] private List<SpecialPinView> specialPinViews;
     [SerializeField] private BallScoreView ballScoreView;
     [SerializeField] private TotalScoreView totalScoreView;
+    [SerializeField] private ChestBarView chestBarView;
+    [SerializeField] private CurrencyView currencyView;
 
     private int currentSpecialPinHitCount;
-    
+
+
     private void Awake()
     {
         Initialize();
@@ -34,46 +38,56 @@ public class PlinkoManager : MonoBehaviour
         {
             specialPinView.Initialize(this, currentSpecialPinHitCount, maxSpecialPinHitCount);
         }
+
+        chestBarView.Initialize(this);
     }
 
     public void OnBallHitSpecialPin()
     {
-        print("Special pin hit");
-
         currentSpecialPinHitCount++;
 
         foreach (var specialPinView in specialPinViews)
         {
             specialPinView.SetFillAmount(currentSpecialPinHitCount, maxSpecialPinHitCount);
         }
-        
-        ballScoreView.SetScoreText(currentSpecialPinHitCount);
+
+        if (currentSpecialPinHitCount >= maxSpecialPinHitCount)
+        {
+            ballScoreView.SetScoreText(currentSpecialPinHitCount * scorePerHit * 2);
+        }
+        else
+        {
+            ballScoreView.SetScoreText(currentSpecialPinHitCount * scorePerHit);
+        }
     }
 
     public void OnSpawnButtonClicked(int index)
     {
-        print("Spawn button clicked");
         DisallowAllSpawnerButtonInteractions(index);
     }
 
     public void OnBallEnteredBasket(int multiplier)
     {
-        print("Ball entered");
         AllowAllSpawnerButtonInteractions();
 
-        
         foreach (var specialPinView in specialPinViews)
         {
-            specialPinView.SetFillAmount(0, currentSpecialPinHitCount);
+            specialPinView.SetFillAmount(0, maxSpecialPinHitCount);
         }
-        
-        ballScoreView.SetScoreText(currentSpecialPinHitCount);
+
+        ballScoreView.SetScoreText(currentSpecialPinHitCount * scorePerHit);
         ballScoreView.ResetWithAnimation();
-        totalScoreView.AddScoreWithAnimation(multiplier * currentSpecialPinHitCount);
-        
+        totalScoreView.AddScoreWithAnimation(multiplier * currentSpecialPinHitCount * scorePerHit);
+        chestBarView.AddProgress(multiplier * currentSpecialPinHitCount * scorePerHit);
+
         currentSpecialPinHitCount = 0;
     }
-    
+
+    public void OnRewardReached(float value)
+    {
+        currencyView.AddCurrencyWithAnimation(value);
+    }
+
     private void AllowAllSpawnerButtonInteractions()
     {
         foreach (var spawnButtonView in spawnerButtonViews)
@@ -81,7 +95,7 @@ public class PlinkoManager : MonoBehaviour
             spawnButtonView.AllowInteraction();
         }
     }
-    
+
     private void DisallowAllSpawnerButtonInteractions(int index)
     {
         foreach (var spawnButtonView in spawnerButtonViews)

@@ -7,7 +7,8 @@ public class BallScoreView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
 
     private int score;
-    
+    private Tween tween;
+
     public void SetScoreText(int newScore)
     {
         score = newScore;
@@ -18,7 +19,8 @@ public class BallScoreView : MonoBehaviour
     {
         int startValue = score;
 
-        DOTween.To(() => startValue, x =>
+        tween.Kill();
+        tween = DOTween.To(() => startValue, x =>
         {
             startValue = x;
             scoreText.text = x.ToString();

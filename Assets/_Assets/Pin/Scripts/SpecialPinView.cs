@@ -55,7 +55,7 @@ public class SpecialPinView : MonoBehaviour
     private void Unhighlight()
     {
         IsHighlighted = false;
-        multiplierText.text = "1";
+        multiplierText.text = "5";
         fullImage.gameObject.SetActive(false);
     }
 
