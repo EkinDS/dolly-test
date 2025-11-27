@@ -14,6 +14,7 @@ public class PlinkoManager : MonoBehaviour
     [SerializeField] private CurrencyView currencyView;
 
     private int currentSpecialPinHitCount;
+    private int score;
 
 
     private void Awake()
@@ -53,12 +54,15 @@ public class PlinkoManager : MonoBehaviour
 
         if (currentSpecialPinHitCount >= maxSpecialPinHitCount)
         {
-            ballScoreView.SetScoreText(currentSpecialPinHitCount * scorePerHit * 2);
+            score = currentSpecialPinHitCount * currentSpecialPinHitCount * scorePerHit * 2;
         }
         else
         {
-            ballScoreView.SetScoreText(currentSpecialPinHitCount * scorePerHit);
+            score = currentSpecialPinHitCount * 5;
         }
+        
+        ballScoreView.SetScoreText(currentSpecialPinHitCount * scorePerHit);
+
     }
 
     public void OnSpawnButtonClicked(int index)
@@ -75,12 +79,14 @@ public class PlinkoManager : MonoBehaviour
             specialPinView.SetFillAmount(0, maxSpecialPinHitCount);
         }
 
-        ballScoreView.SetScoreText(currentSpecialPinHitCount * scorePerHit);
+        score *= multiplier;
+        ballScoreView.SetScoreText(score);
         ballScoreView.ResetWithAnimation();
-        totalScoreView.AddScoreWithAnimation(multiplier * currentSpecialPinHitCount * scorePerHit);
-        chestBarView.AddProgress(multiplier * currentSpecialPinHitCount * scorePerHit);
+        totalScoreView.AddScoreWithAnimation(score);
+        chestBarView.AddProgress(score);
 
         currentSpecialPinHitCount = 0;
+        score = 0;
     }
 
     public void OnRewardReached(float value)

@@ -5,7 +5,9 @@ public class BallView : MonoBehaviour
 {
     private Rigidbody2D _rigidbody;
     private PlinkoManager plinkoManager;
-
+    private bool collidedWithBasket;
+    
+    
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -43,11 +45,16 @@ public class BallView : MonoBehaviour
         
         if (basketView)
         {
-            plinkoManager.OnBallEnteredBasket(basketView.GetMultiplier());
+            if (!collidedWithBasket)
+            {
+                collidedWithBasket = true;
+                plinkoManager.OnBallEnteredBasket(basketView.GetMultiplier());
             
-            Destroy(gameObject);
+                Destroy(gameObject);
 
-            return;
+                return;
+            }
+            
         }
     }
 }
